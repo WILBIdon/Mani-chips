@@ -336,23 +336,52 @@
             inset: 0;
             z-index: 0;
         }
-        .hero-bg img {
+        .hero-bg video,
+        .hero-bg .hero-poster {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
-            transition: transform 0.1s linear;
+            position: absolute;
+            inset: 0;
+        }
+        .hero-bg video {
+            transition: opacity 0.8s ease;
+        }
+        .hero-bg .hero-poster {
+            z-index: 0;
+        }
+        .hero-bg video.loaded {
+            z-index: 1;
+        }
+        /* Ken Burns slow zoom for cinematic feel */
+        .hero-bg video,
+        .hero-bg .hero-poster {
+            animation: kenBurns 20s ease-in-out infinite alternate;
+        }
+        @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.08) translate(-1%, -1%); }
         }
         .hero-overlay {
             position: absolute;
             inset: 0;
+            z-index: 2;
             background: linear-gradient(
                 to top,
                 var(--black) 0%,
-                rgba(10,10,10,0.85) 30%,
-                rgba(10,10,10,0.5) 60%,
-                rgba(10,10,10,0.3) 100%
+                rgba(10,10,10,0.82) 25%,
+                rgba(10,10,10,0.45) 55%,
+                rgba(10,10,10,0.25) 100%
             );
+        }
+        /* Vignette effect for cinematic look */
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            box-shadow: inset 0 0 150px rgba(0,0,0,0.6);
+            pointer-events: none;
         }
 
         /* Floating particles */
@@ -937,7 +966,28 @@
     <!-- ===== HERO ===== -->
     <section class="hero" id="home">
         <div class="hero-bg">
-            <img src="https://images.unsplash.com/photo-1576107232684-1279f3908594?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Papas Fritas Crujientes" id="hero-bg-img" fetchpriority="high">
+            <!-- Poster fallback (shows while video loads or if video fails) -->
+            <img src="https://images.unsplash.com/photo-1576107232684-1279f3908594?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
+                 alt="Papas Fritas Crujientes" 
+                 class="hero-poster" 
+                 fetchpriority="high">
+
+            <!-- Video Hero Background
+                 ▸ Reemplaza el src con tu propio video (MP4 recomendado)
+                 ▸ Puedes subir tu video como 'hero-video.mp4' en la misma carpeta
+                 ▸ playsinline + muted = autoplay funciona en iOS/Android
+            -->
+            <video id="hero-video"
+                   autoplay 
+                   muted 
+                   loop 
+                   playsinline
+                   preload="auto"
+                   poster="https://images.unsplash.com/photo-1576107232684-1279f3908594?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                   src="hero-video.mp4">
+            </video>
+
+            <div class="hero-vignette"></div>
             <div class="hero-overlay"></div>
         </div>
 
@@ -1108,23 +1158,27 @@
         }
 
         // ============================
-        // PARALLAX HERO
+        // VIDEO HERO — Load + Fallback
         // ============================
-        const heroBgImg = document.getElementById('hero-bg-img');
-        let ticking = false;
-        function updateParallax() {
-            const scrollY = window.scrollY;
-            if (scrollY < window.innerHeight) {
-                heroBgImg.style.transform = 'translateY(' + (scrollY * 0.35) + 'px) scale(1.05)';
+        const heroVideo = document.getElementById('hero-video');
+        
+        // When video can play, show it above the poster image
+        heroVideo.addEventListener('canplay', () => {
+            heroVideo.classList.add('loaded');
+        });
+
+        // If video fails to load (e.g. file not found), hide it gracefully
+        // The poster image will remain visible via CSS
+        heroVideo.addEventListener('error', () => {
+            heroVideo.style.display = 'none';
+        });
+
+        // On iOS, ensure video plays after user interaction
+        document.addEventListener('touchstart', () => {
+            if (heroVideo.paused) {
+                heroVideo.play().catch(() => {});
             }
-            ticking = false;
-        }
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        }, { passive: true });
+        }, { once: true, passive: true });
 
         // ============================
         // NAVBAR SCROLL
