@@ -547,9 +547,13 @@
             overflow-x: auto;
             gap: 8px;
             padding: 4px 20px;
-            justify-content: center;
+            justify-content: flex-start;
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+        .categories-scroll::after {
+            content: '';
+            padding-right: 12px; /* Extra padding at the end of scroll */
         }
         .categories-scroll::-webkit-scrollbar { display: none; }
         .cat-btn {
@@ -606,6 +610,8 @@
             .products-grid { grid-template-columns: repeat(3, 1fr); gap: 28px; }
         }
         @media (min-width: 768px) {
+            .categories-scroll { justify-content: center; }
+            .categories-scroll::after { display: none; }
             .menu-section { padding: 120px 40px 140px; }
             .section-header { margin-bottom: 64px; }
             .categories { margin-bottom: 56px; }
