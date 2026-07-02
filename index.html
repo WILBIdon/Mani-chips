@@ -596,6 +596,36 @@
             width: 60%;
         }
 
+        .scroll-hint {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 50px;
+            background: linear-gradient(to right, transparent, var(--black) 80%);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 4px;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+        .scroll-hint i {
+            color: var(--red);
+            font-size: 1.2rem;
+            animation: bounceRight 1.2s infinite;
+            filter: drop-shadow(0 0 8px var(--gold));
+        }
+        @keyframes bounceRight {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(6px); }
+        }
+        @media (min-width: 768px) {
+            .scroll-hint { display: none; }
+        }
+
         /* Products Grid */
         .products-grid {
             display: grid;
@@ -1192,11 +1222,14 @@
             </div>
 
             <div class="categories reveal reveal-delay-1">
-                <div class="categories-scroll hide-scrollbar">
+                <div class="categories-scroll hide-scrollbar" id="categories-scroll">
                     <button class="cat-btn active" data-category="all">Todos</button>
                     <button class="cat-btn" data-category="maxi">Maxi</button>
                     <button class="cat-btn" data-category="mandi">Mandi</button>
                     <button class="cat-btn" data-category="sencillas">Sencillas</button>
+                </div>
+                <div class="scroll-hint" id="cat-scroll-hint">
+                    <i class="fas fa-chevron-right"></i>
                 </div>
             </div>
 
@@ -1560,6 +1593,22 @@
                 closeProductModal();
             }
         });
+
+        // ============================
+        // CATEGORIES SCROLL HINT
+        // ============================
+        const catScroll = document.getElementById('categories-scroll');
+        const catScrollHint = document.getElementById('cat-scroll-hint');
+        
+        if (catScroll && catScrollHint) {
+            catScroll.addEventListener('scroll', () => {
+                if (catScroll.scrollLeft > 15) {
+                    catScrollHint.style.opacity = '0';
+                } else {
+                    catScrollHint.style.opacity = '1';
+                }
+            }, { passive: true });
+        }
 
     })();
     </script>
