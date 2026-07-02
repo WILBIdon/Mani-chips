@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Old files (renamed)
+cat_logo_mandy_chips*.html
+logo\ mandi\ .jpeg
+WhatsApp\ Image*.jpeg
