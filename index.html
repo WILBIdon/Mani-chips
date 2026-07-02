@@ -920,10 +920,175 @@
         }
 
         /* ============================================
+           PRODUCT MODAL / POPUP
+           ============================================ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-card {
+            background: var(--gray-dark);
+            border: 1px solid rgba(255,255,255,0.08);
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px var(--red-glow);
+        }
+        .modal-overlay.active .modal-card {
+            transform: scale(1) translateY(0);
+        }
+        .modal-card::-webkit-scrollbar { width: 4px; }
+        .modal-card::-webkit-scrollbar-thumb { background: var(--red-dark); border-radius: 2px; }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(10,10,10,0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: var(--white);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .modal-close:hover {
+            background: var(--red);
+            border-color: var(--red);
+            transform: rotate(90deg);
+        }
+        .modal-img-wrap {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+        .modal-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .modal-card:hover .modal-img-wrap img {
+            transform: scale(1.03);
+        }
+        .modal-img-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, var(--gray-dark), transparent);
+            pointer-events: none;
+        }
+        .modal-body {
+            padding: 24px 28px 28px;
+        }
+        .modal-product-name {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+        .modal-product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--red);
+            margin-bottom: 14px;
+        }
+        .modal-product-ingredients {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.78rem;
+            font-weight: 300;
+            line-height: 1.7;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .modal-whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px;
+            background: #25D366;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .modal-whatsapp-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        .modal-whatsapp-btn:hover::before {
+            transform: translateX(100%);
+        }
+        .modal-whatsapp-btn:hover {
+            background: #1fb855;
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.4);
+            transform: translateY(-1px);
+        }
+        .modal-whatsapp-btn i {
+            font-size: 1.2rem;
+        }
+
+        @media (min-width: 768px) {
+            .modal-img-wrap { height: 340px; }
+            .modal-body { padding: 28px 32px 32px; }
+            .modal-product-name { font-size: 1.8rem; }
+        }
+
+        /* ============================================
            UTILS
            ============================================ */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Make product cards clickable */
+        .product-card { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -1067,6 +1232,28 @@
             &copy; 2026 Mandi Chips. Todos los derechos reservados.
         </div>
     </footer>
+
+    <!-- ===== PRODUCT MODAL ===== -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal-card">
+            <button class="modal-close" id="modal-close" aria-label="Cerrar">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-img-wrap">
+                <img id="modal-img" src="" alt="" width="480" height="340">
+                <div class="modal-img-gradient"></div>
+            </div>
+            <div class="modal-body">
+                <h3 class="modal-product-name" id="modal-name"></h3>
+                <p class="modal-product-price" id="modal-price"></p>
+                <p class="modal-product-ingredients" id="modal-ingredients"></p>
+                <a class="modal-whatsapp-btn" id="modal-whatsapp" href="#" target="_blank" rel="noopener">
+                    <i class="fab fa-whatsapp"></i>
+                    Pedir Ahora por WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== SCRIPTS ===== -->
     <script>
@@ -1238,6 +1425,9 @@
                 </div>
             `;
 
+            // Click to open modal
+            card.addEventListener('click', () => openProductModal(product));
+
             // 3D Tilt on hover (desktop)
             if (window.matchMedia('(hover: hover)').matches) {
                 card.addEventListener('mousemove', (e) => {
@@ -1310,6 +1500,60 @@
         }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
         revealElements.forEach(el => revealObserver.observe(el));
+
+        // ============================
+        // PRODUCT MODAL
+        // ============================
+        const modal = document.getElementById('product-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalName = document.getElementById('modal-name');
+        const modalPrice = document.getElementById('modal-price');
+        const modalIngredients = document.getElementById('modal-ingredients');
+        const modalWhatsapp = document.getElementById('modal-whatsapp');
+        const modalCloseBtn = document.getElementById('modal-close');
+
+        // WhatsApp number (change this to your real number)
+        const WHATSAPP_NUMBER = '573000000000'; // ← Cambia por tu número real con código de país
+
+        function openProductModal(product) {
+            modalImg.src = product.image;
+            modalImg.alt = product.name;
+            modalName.textContent = product.name;
+            modalPrice.textContent = product.price;
+            modalIngredients.textContent = product.ingredients;
+
+            // Build WhatsApp message
+            const message = encodeURIComponent(
+                `🍟 ¡Hola Mandi Chips! Quiero pedir:\n\n` +
+                `📦 *${product.name}*\n` +
+                `💰 ${product.price}\n\n` +
+                `¡Gracias!`
+            );
+            modalWhatsapp.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on X button
+        modalCloseBtn.addEventListener('click', closeProductModal);
+
+        // Close on backdrop click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeProductModal();
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeProductModal();
+            }
+        });
 
     })();
     </script>
