@@ -259,12 +259,11 @@
         .p-name {
             font-family: var(--font-display);
             font-size: 1.35rem; font-weight: 700;
-            color: var(--white); margin-bottom: 10px;
-            line-height: 1.2;
+            color: var(--white); margin-bottom: 8px;
+            transition: all 0.3s ease; transform-origin: left center;
         }
+        .p-card:hover .p-name { color: var(--gold); transform: scale(1.05); }
         .p-desc {
-            color: var(--text-mid);
-            font-size: .85rem; font-weight: 400;
             line-height: 1.7;
         }
 
@@ -301,7 +300,14 @@
         .zoom-ov.active img { transform: scale(1); }
         .zoom-x { position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); background: rgba(10,10,10,.7); color: var(--white); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .3s; z-index: 5; }
         .zoom-x:hover { background: var(--red); border-color: var(--red); }
-        .zoom-footer { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); text-align: center; }
+        .zoom-footer { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); text-align: center; width: 90%; max-width: 450px; }
+        .zoom-footer-bg {
+            background: rgba(15,15,15,0.85); backdrop-filter: blur(10px);
+            padding: 25px 35px; border-radius: 16px;
+            border: 1px solid rgba(212,160,23,0.3);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            display: inline-block; width: 100%; box-sizing: border-box;
+        }
         .zoom-footer h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--white); margin-bottom: 4px; }
         .zoom-footer p { color: var(--text-soft); font-size: .85rem; }
         .zoom-badge {
@@ -528,10 +534,12 @@
         <button class="zoom-x" id="zoom-x" aria-label="Cerrar"><i class="fas fa-times"></i></button>
         <img id="zoom-img" src="" alt="">
         <div class="zoom-footer">
-            <h3 id="zoom-name"></h3>
-            <p id="zoom-price"></p>
-            <button class="zoom-badge" id="zoom-badge-btn">🍽 Qué lleva</button>
-            <p class="zoom-desc" id="zoom-desc" style="display:none;pointer-events:auto;"></p>
+            <div class="zoom-footer-bg">
+                <h3 id="zoom-name"></h3>
+                <p id="zoom-price"></p>
+                <button class="zoom-badge" id="zoom-badge-btn">🍽 Qué lleva</button>
+                <p class="zoom-desc" id="zoom-desc" style="display:none;pointer-events:auto;"></p>
+            </div>
         </div>
     </div>
 
@@ -632,8 +640,8 @@
             maxis: { title:"Maxis", sub:"Las más grandes, más generosas... pura abundancia.", icon:"fas fa-crown" },
             mandis: { title:"Mandis", sub:"El equilibrio perfecto entre sabor y porción ideal.", icon:"fas fa-fire" },
             especialidades: { title:"Especialidades", sub:"Creaciones únicas con ese toque que solo Mandi tiene.", icon:"fas fa-star" },
-            patacones: { title:"Patacones", sub:"Patacón crujiente relleno con los mejores ingredientes.", icon:"fas fa-leaf" },
-            arepas: { title:"Arepas Rellenas", sub:"Arepas cargadas de sabor al estilo Mandi.", icon:"fas fa-circle" }
+            patacones: { title:"Mandi Patacones", sub:"Patacón crujiente cubierto con los mejores ingredientes (no relleno).", icon:"fas fa-leaf" },
+            arepas: { title:"Mandi Arepas", sub:"Arepas cubiertas de sabor al estilo Mandi (no rellenas).", icon:"fas fa-circle" }
         };
         const catOrder = ['maxis','mandis','especialidades','patacones','arepas'];
         const WA = '573142576867';
@@ -700,8 +708,9 @@
             grid.className='grid';
 
             prods.forEach((pr,i) => {
+                const isStar = pr.id === 22; // BURGUER CHIPS
                 const c = document.createElement('div');
-                c.className='p-card card-rv';
+                c.className = isStar ? 'p-card card-rv star-card' : 'p-card card-rv';
                 c.style.transitionDelay=(i*.05)+'s';
                 c.dataset.pid=pr.id;
                 c.dataset.name=pr.name.toLowerCase();
@@ -710,7 +719,10 @@
                 const btnClass = inOrder ? 'p-add added' : 'p-add';
                 const btnText = inOrder ? '<i class="fas fa-check"></i> Agregado' : '<i class="fas fa-plus"></i> Quiero Este';
 
+                const starHtml = isStar ? '<div class="star-badge"><i class="fas fa-star"></i> NUEVO</div>' : '';
+
                 c.innerHTML = `
+                    ${starHtml}
                     <div class="p-img">
                         <img src="${pr.image}" alt="${pr.name}" loading="lazy" decoding="async" width="400" height="300">
                         <div class="p-img-grad"></div>
