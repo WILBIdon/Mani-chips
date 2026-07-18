@@ -1224,9 +1224,11 @@
             <div class="categories reveal reveal-delay-1">
                 <div class="categories-scroll hide-scrollbar" id="categories-scroll">
                     <button class="cat-btn active" data-category="all">Todos</button>
-                    <button class="cat-btn" data-category="maxi">Maxi</button>
-                    <button class="cat-btn" data-category="mandi">Mandi</button>
-                    <button class="cat-btn" data-category="sencillas">Sencillas</button>
+                    <button class="cat-btn" data-category="maxis">Maxis</button>
+                    <button class="cat-btn" data-category="mandis">Mandis</button>
+                    <button class="cat-btn" data-category="especialidades">Especialidades</button>
+                    <button class="cat-btn" data-category="patacones">Patacones</button>
+                    <button class="cat-btn" data-category="arepas">Arepas</button>
                 </div>
                 <div class="scroll-hint" id="cat-scroll-hint">
                     <i class="fas fa-chevron-right"></i>
@@ -1258,7 +1260,7 @@
             <div class="reveal reveal-delay-2">
                 <h4 class="footer-heading">Síguenos</h4>
                 <div class="social-links">
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/mandichips_/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                 </div>
@@ -1305,57 +1307,345 @@
         const products = [
             {
                 id: 1,
-                name: "MAXIBOMBÓN",
-                category: "maxi",
-                ingredients: "Papas + bombón de pollo + 8 salchichas + 2 choricitos + 2 huevitos + arepa",
-                price: "$ 21.000",
+                name: "SUPER CHIPS",
+                category: "maxis",
+                ingredients: "Papas + 4 cocteleros + 5 Huevitos + Queso + 4 Butifarras + Longaniza + Chorizo + 2 Arepas + Tocineta + Maíz +  salchichas",
+                price: "$ 36.000",
                 image: "producto-1.jpeg",
                 badge: null
             },
             {
                 id: 2,
-                name: "MAXICARNE",
-                category: "maxi",
-                ingredients: "Papas + carne desmechada + 2 choricitos + 2 huevitos + 10 salchichas + queso + arepa",
-                price: "$ 21.000",
+                name: "MAXI TODO",
+                category: "maxis",
+                ingredients: "Papas + Carne desmechada + Pollo desmechado + Tocineta + Queso + Salchichas + 2 Cocteleros + 2 Huevitos + Arepa",
+                price: "$ 25.000",
                 image: "producto-2.jpeg",
                 badge: null
             },
             {
                 id: 3,
-                name: "MAXIMIXTA",
-                category: "maxi",
-                ingredients: "Papas + carne desmechada + pollo desmechado + 2 choricitos + 2 huevitos + 10 salchichas + queso + arepa",
-                price: "$ 23.000",
+                name: "MAXI CARNE",
+                category: "maxis",
+                ingredients: "Papas + Carne desmechada + 2 Cocteleros + 2 Huevitos + Salchichas + Queso + Arepa",
+                price: "$ 21.000",
                 image: "producto-3.jpeg",
                 badge: null
             },
             {
                 id: 4,
-                name: "MAXIPOLLO",
-                category: "maxi",
-                ingredients: "Papas + pollo desmechado + 2 choricitos + 2 huevitos + 8 salchichas + queso + arepa",
+                name: "MAXI POLLO",
+                category: "maxis",
+                ingredients: "Papas + Pollo desmechado + 2 Cocteleros + 2 Huevitos + Salchichas + Queso + Arepa",
                 price: "$ 21.000",
                 image: "producto-1.jpeg",
                 badge: null
             },
             {
                 id: 5,
-                name: "MAXITOCINETA",
-                category: "maxi",
-                ingredients: "Papas + tocineta + queso + 10 salchichas + arepa + 2 choricitos + 2 huevitos",
-                price: "$ 21.000",
+                name: "MAXI MIXTA",
+                category: "maxis",
+                ingredients: "Papas + Pollo desmechado + Carne desmechada + 2 Cocteleros + 2 Huevitos + Salchichas + Queso + Arepa",
+                price: "$ 23.000",
                 image: "producto-2.jpeg",
                 badge: null
             },
             {
                 id: 6,
-                name: "MAXITODO",
-                category: "maxi",
-                ingredients: "Papas + carne desmechada + pollo desmechado + tocineta + queso + 10 salchichas + 2 choricitos + 2 huevitos + arepa",
-                price: "$ 25.000",
+                name: "MAXI TOCINETA",
+                category: "maxis",
+                ingredients: "Papas + Tocineta + Queso + Salchichas + Arepa + 2 Cocteleros + 2 Huevitos",
+                price: "$ 21.000",
                 image: "producto-3.jpeg",
-                badge: "⭐ Popular"
+                badge: null
+            },
+            {
+                id: 7,
+                name: "MAXI BOMBÓN",
+                category: "maxis",
+                ingredients: "Papas + Bombón de Pollo + Salchichas + 2 Cocteleros + 2 Huevitos + Arepa",
+                price: "$ 21.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 8,
+                name: "SUPER MANDIGAS",
+                category: "maxis",
+                ingredients: "Papas + 1 Butifarra + Salchichas + Queso + Arepa + 4 Cocteleros + 4 Huevitos",
+                price: "$ 21.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 9,
+                name: "CHORI JUMBO",
+                category: "mandis",
+                ingredients: "Papas + Chorizo + 2 Cocteleros + 2 Huevitos + Salchichas + Arepa",
+                price: "$ 21.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 10,
+                name: "LONGI JUMBO",
+                category: "mandis",
+                ingredients: "Papas + Longaniza + 2 Cocteleros + 2 Huevitos + Salchichas + Arepa",
+                price: "$ 21.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 11,
+                name: "MANDINGAS",
+                category: "mandis",
+                ingredients: "Papas + Salchichas + Arepa + 2 Cocteleros + 2 Huevitos",
+                price: "$ 16.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 12,
+                name: "MANDI MIXTA",
+                category: "mandis",
+                ingredients: "Papas + Carne desmechada + Pollo desmechado + 1 Huevito + Queso",
+                price: "$ 18.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 13,
+                name: "MANDI CARNE",
+                category: "mandis",
+                ingredients: "Papas + Carne desmechada + 1 huevito + queso",
+                price: "$ 16.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 14,
+                name: "MANDI POLLO",
+                category: "mandis",
+                ingredients: "Papas + Pollo desmechado + 1 huevito + queso",
+                price: "$ 16.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 15,
+                name: "MANDI TOCINETA",
+                category: "mandis",
+                ingredients: "Papas + Tocineta + Queso + Arepa",
+                price: "$ 16.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 16,
+                name: "MANDI BOMBÓN",
+                category: "mandis",
+                ingredients: "Papas + Bombón de pollo + Arepa",
+                price: "$ 16.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 17,
+                name: "MANDI",
+                category: "mandis",
+                ingredients: "Papas + Salchichas + 1 Coctelero + 1 huevito",
+                price: "$ 8.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 18,
+                name: "DORI CHIPS GRANDE",
+                category: "especialidades",
+                ingredients: "Papa + carne desmechada + pollo desmechado + Doritos + Tocineta + Queso + Maicitos",
+                price: "$ 30.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 19,
+                name: "DORI CHIPS PEQUEÑA",
+                category: "especialidades",
+                ingredients: "Papa + carne desmechada + pollo desmechado + Doritos + Tocineta + Queso + Maicitos",
+                price: "$ 25.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 20,
+                name: "MANDI ZENU",
+                category: "especialidades",
+                ingredients: "Papas + carnes frías Zenu + 4 Huevitos",
+                price: "$ 16.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 21,
+                name: "BURGUER",
+                category: "especialidades",
+                ingredients: "Pan + Carne desmechada + Pollo desmechado + Ripio de papa + Tocineta + Queso",
+                price: "$ 20.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 22,
+                name: "BURGUER CHIPS",
+                category: "especialidades",
+                ingredients: "Pan + Carne desmechada + Pollo desmechado + Ripio de papa + Tocineta + Queso + Papas",
+                price: "$ 25.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 23,
+                name: "MANDI DESGRANADO",
+                category: "especialidades",
+                ingredients: "Papas + Tocineta + Queso + Maicitos + 1 huevito",
+                price: "$ 16.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 24,
+                name: "SALCHIESPECIAL",
+                category: "especialidades",
+                ingredients: "Papas + Salchichas + Arepa + 1 Cocteleros + 1 Huevito",
+                price: "$ 10.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 25,
+                name: "SENCILLA",
+                category: "especialidades",
+                ingredients: "Papas + Salchichas",
+                price: "$ 7.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 26,
+                name: "SALCHIPAPA",
+                category: "especialidades",
+                ingredients: "Papas + Salchichas",
+                price: "$ 9.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 27,
+                name: "PATACON CON CARNE",
+                category: "patacones",
+                ingredients: "PATACON + CARNE + QUESO + HUEVITO",
+                price: "$ 14.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 28,
+                name: "PATACON CON CARNE Y PAPAS",
+                category: "patacones",
+                ingredients: "PATACON + CARNE + QUESO + HUEVITO + PAPAS",
+                price: "$ 16.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 29,
+                name: "PATACON CON POLLO",
+                category: "patacones",
+                ingredients: "PATACON + POLLO + QUESO + HUEVITO",
+                price: "$ 14.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 30,
+                name: "PATACON CON POLLO Y PAPAS",
+                category: "patacones",
+                ingredients: "PATACON + POLLO + QUESO + HUEVITO + PAPAS",
+                price: "$ 16.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 31,
+                name: "PATACON MIXTO",
+                category: "patacones",
+                ingredients: "PATACON + CARNE + POLLO + QUESO + HUEVITO",
+                price: "$ 15.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 32,
+                name: "PATACON MIXTOS CON PAPAS",
+                category: "patacones",
+                ingredients: "PATACON + CARNE + POLLO + QUESO + HUEVITO + PAPAS",
+                price: "$ 18.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 33,
+                name: "AREPA CON CARNE",
+                category: "arepas",
+                ingredients: "AREPA + CARNE + QUESO + HUEVITO",
+                price: "$ 14.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 34,
+                name: "AREPA CON CARNE Y PAPAS",
+                category: "arepas",
+                ingredients: "AREPA + CARNE + QUESO + HUEVITO + PAPAS",
+                price: "$ 16.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 35,
+                name: "AREPA CON POLLO",
+                category: "arepas",
+                ingredients: "AREPA + POLLO + QUESO + HUEVITO",
+                price: "$ 14.000",
+                image: "producto-2.jpeg",
+                badge: null
+            },
+            {
+                id: 36,
+                name: "AREPA CON POLLO Y PAPAS",
+                category: "arepas",
+                ingredients: "AREPA + POLLO + QUESO + HUEVITO + PAPAS",
+                price: "$ 16.000",
+                image: "producto-3.jpeg",
+                badge: null
+            },
+            {
+                id: 37,
+                name: "AREPA MIXTA",
+                category: "arepas",
+                ingredients: "AREPA + CARNE + POLLO + QUESO + HUEVITO",
+                price: "$ 15.000",
+                image: "producto-1.jpeg",
+                badge: null
+            },
+            {
+                id: 38,
+                name: "AREPA MIXTA CON PAPAS",
+                category: "arepas",
+                ingredients: "AREPA + CARNE + POLLO + QUESO + HUEVITO + PAPAS",
+                price: "$ 18.000",
+                image: "producto-2.jpeg",
+                badge: null
             }
         ];
 
@@ -1552,7 +1842,7 @@
         const modalCloseBtn = document.getElementById('modal-close');
 
         // WhatsApp number (change this to your real number)
-        const WHATSAPP_NUMBER = '573189479800'; // ← Cambia por tu número real con código de país
+        const WHATSAPP_NUMBER = '57'; // ← Cambia por tu número real con código de país
 
         function openProductModal(product) {
             modalImg.src = product.image;
