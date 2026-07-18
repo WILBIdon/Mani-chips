@@ -24,6 +24,8 @@
             --text: #e0e0e0;
             --text-mid: #b0b0b0;
             --text-soft: #888888;
+            --gold: #D4A017;
+            --gold-dark: #B8860B;
             --red: #E02020;
             --red-dark: #B01515;
             --red-glow: rgba(224, 32, 32, 0.3);
@@ -253,6 +255,7 @@
         .p-card:hover .p-zoom { opacity: 1; }
 
         .p-info { padding: 20px 22px 8px; }
+        .p-card.in-order .p-name { color: var(--gold); }
         .p-name {
             font-family: var(--font-display);
             font-size: 1.35rem; font-weight: 700;
@@ -298,9 +301,26 @@
         .zoom-ov.active img { transform: scale(1); }
         .zoom-x { position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); background: rgba(10,10,10,.7); color: var(--white); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .3s; z-index: 5; }
         .zoom-x:hover { background: var(--red); border-color: var(--red); }
-        .zoom-footer { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); text-align: center; pointer-events: none; }
+        .zoom-footer { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); text-align: center; }
         .zoom-footer h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--white); margin-bottom: 4px; }
         .zoom-footer p { color: var(--text-soft); font-size: .85rem; }
+        .zoom-badge {
+            display: inline-block; margin-top: 14px;
+            background: var(--gold); color: #111;
+            padding: 10px 24px; border-radius: 50px;
+            font-family: var(--font-body); font-size: .82rem; font-weight: 700;
+            letter-spacing: .05em; text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(212,160,23,.4);
+            cursor: pointer; transition: all .3s;
+        }
+        .zoom-badge:hover { background: var(--gold-dark); transform: scale(1.05); }
+        .zoom-desc {
+            margin-top: 12px; max-width: 500px;
+            color: var(--text-mid); font-size: .88rem; line-height: 1.7;
+            text-align: center; pointer-events: none;
+            animation: fadeUp .4s ease both;
+        }
+
 
         /* ===== ORDER DRAWER ===== */
         .order-backdrop {
@@ -366,6 +386,10 @@
             font-size: .85rem; padding: 6px; transition: color .2s;
         }
         .order-item-remove:hover { color: var(--red); }
+
+        /* Per-product sauce selector */
+        .item-sauce { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .item-sauce-label { font-size: .68rem; font-weight: 600; color: var(--text-soft); text-transform: uppercase; letter-spacing: .06em; width: 100%; margin-bottom: 2px; }
 
         /* Sauce selector */
         .sauce-section { padding: 20px 0 10px; border-top: 1px solid var(--border); margin-top: 10px; }
@@ -503,7 +527,12 @@
     <div class="zoom-ov" id="zoom-ov">
         <button class="zoom-x" id="zoom-x" aria-label="Cerrar"><i class="fas fa-times"></i></button>
         <img id="zoom-img" src="" alt="">
-        <div class="zoom-footer"><h3 id="zoom-name"></h3><p id="zoom-price"></p></div>
+        <div class="zoom-footer">
+            <h3 id="zoom-name"></h3>
+            <p id="zoom-price"></p>
+            <button class="zoom-badge" id="zoom-badge-btn">🍽 Qué lleva</button>
+            <p class="zoom-desc" id="zoom-desc" style="display:none;pointer-events:auto;"></p>
+        </div>
     </div>
 
     <!-- ORDER DRAWER -->
@@ -600,7 +629,7 @@
         ];
 
         const catMeta = {
-            maxis: { title:"Maxis", sub:"Las más grandes y cargadas — pura abundancia para compartir.", icon:"fas fa-crown" },
+            maxis: { title:"Maxis", sub:"Las más grandes, más generosas... pura abundancia.", icon:"fas fa-crown" },
             mandis: { title:"Mandis", sub:"El equilibrio perfecto entre sabor y porción ideal.", icon:"fas fa-fire" },
             especialidades: { title:"Especialidades", sub:"Creaciones únicas con ese toque que solo Mandi tiene.", icon:"fas fa-star" },
             patacones: { title:"Patacones", sub:"Patacón crujiente relleno con los mejores ingredientes.", icon:"fas fa-leaf" },
@@ -611,8 +640,7 @@
         const SAUCES = ['BBQ','Rosada','Piña','Mandi Salsa'];
 
         // ========== ORDER STATE ==========
-        let order = []; // { product, qty }
-        let selectedSauces = [];
+        let order = []; // { product, qty, sauces: [] }
 
         function fmtPrice(n) { return '$ ' + n.toLocaleString('es-CO'); }
 
@@ -738,8 +766,26 @@
 
         // ========== ZOOM ==========
         const zOv=document.getElementById('zoom-ov'),zImg=document.getElementById('zoom-img'),zN=document.getElementById('zoom-name'),zP=document.getElementById('zoom-price');
-        function openZoom(p){zImg.src=p.image;zImg.alt=p.name;zN.textContent=p.name;zP.textContent=fmtPrice(p.price);zOv.classList.add('active');document.body.style.overflow='hidden';}
-        function closeZoom(){zOv.classList.remove('active');document.body.style.overflow='';}
+        const zBadge=document.getElementById('zoom-badge-btn'),zDesc=document.getElementById('zoom-desc');
+        let currentZoomProduct = null;
+        function openZoom(p){
+            currentZoomProduct = p;
+            zImg.src=p.image;zImg.alt=p.name;zN.textContent=p.name;zP.textContent=fmtPrice(p.price);
+            zDesc.style.display='none'; zDesc.textContent='';
+            zBadge.textContent='🍽 Qué lleva';
+            zOv.classList.add('active');document.body.style.overflow='hidden';
+        }
+        function closeZoom(){zOv.classList.remove('active');document.body.style.overflow='';currentZoomProduct=null;}
+        zBadge.addEventListener('click', () => {
+            if(zDesc.style.display==='none' && currentZoomProduct){
+                zDesc.textContent=currentZoomProduct.desc;
+                zDesc.style.display='block';
+                zBadge.textContent='✕ Cerrar';
+            } else {
+                zDesc.style.display='none';
+                zBadge.textContent='🍽 Qué lleva';
+            }
+        });
         document.getElementById('zoom-x').addEventListener('click',closeZoom);
         zOv.addEventListener('click',e=>{if(e.target===zOv)closeZoom();});
 
@@ -754,7 +800,7 @@
             if(idx >= 0) {
                 order.splice(idx,1);
             } else {
-                order.push({product, qty:1});
+                order.push({product, qty:1, sauces:[]});
             }
             updateOrderUI();
             updateCardButtons();
@@ -763,13 +809,16 @@
         function updateCardButtons() {
             document.querySelectorAll('.p-add').forEach(btn => {
                 const id = parseInt(btn.dataset.id);
+                const card = btn.closest('.p-card');
                 const inOrder = order.find(o=>o.product.id===id);
                 if(inOrder) {
                     btn.className='p-add added';
                     btn.innerHTML='<i class="fas fa-check"></i> Agregado';
+                    card.classList.add('in-order');
                 } else {
                     btn.className='p-add';
                     btn.innerHTML='<i class="fas fa-plus"></i> Quiero Este';
+                    card.classList.remove('in-order');
                 }
             });
         }
@@ -793,8 +842,9 @@
 
             let html = '';
             order.forEach((item,i) => {
+                const itemSauces = item.sauces || [];
                 html += `
-                    <div class="order-item">
+                    <div class="order-item" style="flex-wrap:wrap">
                         <img src="${item.product.image}" alt="${item.product.name}" width="60" height="60">
                         <div class="order-item-info">
                             <div class="order-item-name">${item.product.name}</div>
@@ -806,19 +856,13 @@
                             <button data-action="plus" data-idx="${i}"><i class="fas fa-plus" style="font-size:.65rem"></i></button>
                         </div>
                         <button class="order-item-remove" data-idx="${i}" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                        <div class="item-sauce" style="width:100%;padding-left:74px;">
+                            <span class="item-sauce-label">🥫 Salsa:</span>
+                            ${SAUCES.map(s=>`<button class="sauce-opt ${itemSauces.includes(s)?'selected':''}" data-idx="${i}" data-sauce="${s}">${s}</button>`).join('')}
+                        </div>
                     </div>
                 `;
             });
-
-            // Sauce section
-            html += `
-                <div class="sauce-section">
-                    <h4><i class="fas fa-droplet" style="margin-right:6px;color:var(--red)"></i> ¿Qué salsa quieres?</h4>
-                    <div class="sauce-options">
-                        ${SAUCES.map(s=>`<button class="sauce-opt ${selectedSauces.includes(s)?'selected':''}" data-sauce="${s}">${s}</button>`).join('')}
-                    </div>
-                </div>
-            `;
 
             orderBody.innerHTML = html;
 
@@ -842,12 +886,14 @@
                 });
             });
 
-            // Sauce buttons
+            // Per-product sauce buttons
             orderBody.querySelectorAll('.sauce-opt').forEach(btn => {
                 btn.addEventListener('click', () => {
+                    const idx=parseInt(btn.dataset.idx);
                     const s=btn.dataset.sauce;
-                    if(selectedSauces.includes(s)) selectedSauces=selectedSauces.filter(x=>x!==s);
-                    else selectedSauces.push(s);
+                    if(!order[idx].sauces) order[idx].sauces=[];
+                    if(order[idx].sauces.includes(s)) order[idx].sauces=order[idx].sauces.filter(x=>x!==s);
+                    else order[idx].sauces.push(s);
                     updateOrderUI();
                 });
             });
@@ -858,8 +904,11 @@
 
             // WhatsApp link
             let msg = '🍟 ¡Hola Mandi Chips! Mi orden:\n\n';
-            order.forEach(o => { msg += `📦 ${o.qty}x *${o.product.name}* — ${fmtPrice(o.product.price * o.qty)}\n`; });
-            if(selectedSauces.length) msg += `\n🥫 Salsas: ${selectedSauces.join(', ')}\n`;
+            order.forEach(o => {
+                msg += `📦 ${o.qty}x *${o.product.name}* — ${fmtPrice(o.product.price * o.qty)}`;
+                if(o.sauces && o.sauces.length) msg += ` (Salsa: ${o.sauces.join(', ')})`;
+                msg += '\n';
+            });
             msg += `\n💰 *Total: ${fmtPrice(total)}*\n\n¡Gracias!`;
             orderSend.href = `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
         }
