@@ -44,7 +44,9 @@
             background: var(--bg); color: var(--text);
             font-family: var(--font-body); overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            user-select: none; -webkit-user-select: none;
         }
+        input, textarea { user-select: auto; -webkit-user-select: auto; }
         ::selection { background: var(--red); color: var(--white); }
         img { max-width: 100%; height: auto; }
 
@@ -1278,6 +1280,20 @@
                 burguerCard.style.transition = 'box-shadow 0.3s';
                 burguerCard.style.boxShadow = '0 0 30px var(--red)';
                 setTimeout(() => burguerCard.style.boxShadow = '', 2000);
+            }
+        });
+
+        // ========== ANTI-CLONE SECURITY ==========
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U (Mac & Win)
+            if(e.keyCode === 123 || 
+              (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
+              (e.metaKey && e.altKey && (e.keyCode === 73 || e.keyCode === 74)) || 
+              (e.ctrlKey && e.keyCode === 85) || 
+              (e.metaKey && e.keyCode === 85)) {
+                e.preventDefault();
+                return false;
             }
         });
 
