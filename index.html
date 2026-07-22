@@ -91,7 +91,8 @@
         }
         .nav-search input::placeholder { color: var(--text-soft); }
         .nav-search input:focus { border-color: var(--red); background: rgba(255,255,255,.1); box-shadow: 0 0 20px var(--red-glow); }
-        .nav-search .icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-soft); font-size: .82rem; pointer-events: none; }
+        .nav-search .search-btn { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-soft); font-size: 1rem; cursor: pointer; padding: 4px; transition: color .3s; display: flex; align-items: center; justify-content: center; }
+        .nav-search .search-btn:hover { color: var(--gold); }
 
         .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
@@ -644,7 +645,7 @@
         </a>
         <div class="nav-search">
             <input type="text" id="search-input" placeholder="Buscar producto..." autocomplete="off">
-            <i class="fas fa-search icon"></i>
+            <button id="search-btn" class="search-btn" aria-label="Buscar"><i class="fas fa-search"></i></button>
         </div>
         <div class="nav-right">
             <button class="order-fab" id="order-fab" aria-label="Ver orden">
@@ -897,6 +898,7 @@
                 c.style.transitionDelay=(i*.05)+'s';
                 c.dataset.pid=pr.id;
                 c.dataset.name=pr.name.toLowerCase();
+                c.dataset.desc=pr.desc.toLowerCase();
 
                 const inOrder = order.find(o=>o.product.id===pr.id);
                 const btnClass = inOrder ? 'p-add added' : 'p-add';
@@ -966,22 +968,33 @@
 
         // ========== SEARCH ==========
         const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
         const noRes = document.getElementById('no-results');
         let sTO;
-        searchInput.addEventListener('input',()=>{clearTimeout(sTO);sTO=setTimeout(doSearch,180);});
+        
+        searchInput.addEventListener('input', () => { clearTimeout(sTO); sTO=setTimeout(doSearch, 200); });
+        if(searchBtn) searchBtn.addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', e => { if(e.key==='Enter') doSearch(); });
 
         function doSearch() {
-            const q=searchInput.value.trim().toLowerCase();
-            let total=0;
-            document.querySelectorAll('.cat-section').forEach(sec=>{
-                let vis=0;
-                sec.querySelectorAll('.p-card').forEach(card=>{
-                    if(!q||card.dataset.name.includes(q)){card.classList.remove('hidden-search');vis++;total++;}
-                    else card.classList.add('hidden-search');
+            const q = searchInput.value.trim().toLowerCase();
+            let total = 0;
+            document.querySelectorAll('.cat-section').forEach(sec => {
+                let vis = 0;
+                sec.querySelectorAll('.p-card').forEach(card => {
+                    const matchName = card.dataset.name.includes(q);
+                    const matchDesc = card.dataset.desc.includes(q);
+                    if(!q || matchName || matchDesc) { 
+                        card.classList.remove('hidden-search'); 
+                        vis++; 
+                        total++;
+                    } else {
+                        card.classList.add('hidden-search');
+                    }
                 });
-                sec.classList.toggle('hidden-search', vis===0 && !!q);
+                sec.classList.toggle('hidden-search', vis === 0 && !!q);
             });
-            noRes.style.display = (q && total===0) ? 'block' : 'none';
+            noRes.style.display = (q && total === 0) ? 'block' : 'none';
         }
 
         // ========== ZOOM ==========
