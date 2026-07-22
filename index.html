@@ -256,7 +256,7 @@
         .p-zoom i { color: var(--white); font-size: .85rem; }
         .p-card:hover .p-zoom { opacity: 1; }
 
-        .p-info { padding: 20px 22px 8px; }
+        .p-info { padding: 20px 22px 8px; cursor: pointer; }
         .p-card.in-order .p-name { color: var(--gold); }
         .p-name {
             font-family: var(--font-display);
@@ -922,6 +922,7 @@
                 `;
 
                 c.querySelector('.p-img').addEventListener('click', e => { e.stopPropagation(); openZoom(pr); });
+                c.querySelector('.p-info').addEventListener('click', e => { e.stopPropagation(); openZoom(pr); });
                 c.querySelector('.p-add').addEventListener('click', e => { e.stopPropagation(); toggleProduct(pr, e); });
 
                 grid.appendChild(c);
