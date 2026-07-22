@@ -1224,9 +1224,19 @@
         const recClose = document.getElementById('recommend-close');
         const recBtn = document.getElementById('recommend-btn');
 
-        setTimeout(() => {
-            recPopup.classList.add('show');
-        }, 2000);
+        const promoGrid = document.querySelector('.promo-grid');
+        if(promoGrid) {
+            const popupObs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if(e.isIntersecting) {
+                        // Delay slightly so it feels natural when reading the banner
+                        setTimeout(() => recPopup.classList.add('show'), 400);
+                        popupObs.disconnect();
+                    }
+                });
+            }, { threshold: 0.3 });
+            popupObs.observe(promoGrid);
+        }
 
         recClose.addEventListener('click', () => {
             recPopup.classList.remove('show');
