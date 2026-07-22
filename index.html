@@ -364,8 +364,46 @@
             padding: 20px; opacity: 0; visibility: hidden; transition: all .4s; cursor: zoom-out;
         }
         .zoom-ov.active { opacity: 1; visibility: visible; }
-        .zoom-ov img { max-width: 95vw; max-height: 88vh; object-fit: contain; border-radius: var(--radius); transform: scale(.85); transition: transform .5s cubic-bezier(.34,1.56,.64,1); box-shadow: 0 30px 100px rgba(0,0,0,.8); touch-action: pinch-zoom; }
-        .zoom-ov.active img { transform: scale(1); }
+        .zoom-media-container {
+            width: 100%; max-width: 95vw; max-height: 65vh;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform .5s cubic-bezier(.34,1.56,.64,1); transform: scale(.85);
+            margin-bottom: 20px;
+        }
+        .zoom-ov.active .zoom-media-container { transform: scale(1); }
+        .zoom-media-container img, .zoom-media-container video {
+            max-width: 100%; max-height: 65vh; object-fit: contain; border-radius: var(--radius);
+            box-shadow: 0 30px 100px rgba(0,0,0,.8); touch-action: pinch-zoom;
+        }
+        
+        /* Salsa Rosada Theme Gallery */
+        .zoom-gallery-wrap {
+            width: 100%; margin-bottom: 15px;
+        }
+        .zoom-gallery {
+            display: flex; gap: 12px; overflow-x: auto; padding: 10px 5px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .zoom-gallery::-webkit-scrollbar { height: 6px; }
+        .zoom-gallery::-webkit-scrollbar-track { background: rgba(255,142,142,0.1); border-radius: 4px; }
+        .zoom-gallery::-webkit-scrollbar-thumb { background: #FF8E8E; border-radius: 4px; }
+        
+        .gallery-thumb {
+            width: 60px; height: 60px; border-radius: 10px; flex-shrink: 0;
+            cursor: pointer; overflow: hidden; position: relative;
+            border: 2px solid transparent; transition: all 0.3s;
+            opacity: 0.6;
+        }
+        .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-thumb.active {
+            border-color: #FF8E8E; opacity: 1; transform: scale(1.08);
+            box-shadow: 0 0 15px rgba(255,142,142,0.6);
+        }
+        .gallery-thumb .play-icon {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.8rem;
+        }
         .zoom-x { position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); background: rgba(10,10,10,.7); color: var(--white); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .3s; z-index: 5; }
         .zoom-x:hover { background: var(--red); border-color: var(--red); }
         .zoom-footer { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); text-align: center; width: 90%; max-width: 450px; }
@@ -629,8 +667,14 @@
     <!-- ZOOM -->
     <div class="zoom-ov" id="zoom-ov">
         <button class="zoom-x" id="zoom-x" aria-label="Cerrar"><i class="fas fa-times"></i></button>
-        <img id="zoom-img" src="" alt="">
+        <div class="zoom-media-container" id="zoom-media-container">
+            <img id="zoom-img" src="" alt="">
+            <video id="zoom-vid" src="" autoplay loop muted playsinline style="display:none;"></video>
+        </div>
         <div class="zoom-footer">
+            <div class="zoom-gallery-wrap" id="zoom-gallery-wrap" style="display:none;">
+                <div class="zoom-gallery" id="zoom-gallery"></div>
+            </div>
             <div class="zoom-footer-bg">
                 <h3 id="zoom-name"></h3>
                 <p id="zoom-price"></p>
@@ -710,10 +754,10 @@
             { id:15, name:"MANDI TOCINETA", cat:"mandis", desc:"Papas • Tocineta • Queso • Arepa", price:16000, image:"IMAGENS/MANDI TOCINETA1.jpg" },
             { id:16, name:"MANDI BOMBÓN", cat:"mandis", desc:"Papas • Bombón de pollo • Arepa", price:16000, image:"IMAGENS/MANDI.jpg" },
             { id:17, name:"MANDI", cat:"mandis", desc:"Papas • Salchichas • 1 Coctelero • 1 Huevito", price:8000, image:"IMAGENS/MANDI.jpg" },
-            { id:18, name:"DORI CHIPS GRANDE", cat:"especialidades", desc:"Papa • Carne desmechada • Pollo desmechado • Doritos • Tocineta • Queso • Maicitos", price:30000, image:"IMAGENS/DORICHIPS GRANDE.jpg" },
-            { id:19, name:"DORI CHIPS PEQUEÑA", cat:"especialidades", desc:"Papa • Carne desmechada • Pollo desmechado • Doritos • Tocineta • Queso • Maicitos", price:25000, image:"IMAGENS/DORICHIPS.jpg" },
-            { id:20, name:"MANDI ZENU", cat:"especialidades", desc:"Papas • Carnes frías Zenu • 4 Huevitos", price:16000, image:"IMAGENS/Mandi zenu.jpg" },
-            { id:21, name:"BURGUER", cat:"especialidades", desc:"Pan • Carne desmechada • Pollo desmechado • Ripio de papa • Tocineta • Queso", price:20000, image:"IMAGENS/MANDI MIXTA.jpg" },
+            { id:18, name:"DORI CHIPS GRANDE", cat:"especialidades", desc:"Papa • Carne desmechada • Pollo desmechado • Doritos • Tocineta • Queso • Maicitos", price:30000, image:"IMAGENS/DORICHIPS GRANDE.jpg", gallery:[{type:'image',src:'IMAGENS/DORICHIPS GRANDE.jpg'},{type:'video',src:'hero-video.mp4',thumb:'IMAGENS/DORICHIPS GRANDE.jpg'}] },
+            { id:19, name:"DORI CHIPS PEQUEÑA", cat:"especialidades", desc:"Papa • Carne desmechada • Pollo desmechado • Doritos • Tocineta • Queso • Maicitos", price:25000, image:"IMAGENS/DORICHIPS.jpg", gallery:[{type:'image',src:'IMAGENS/DORICHIPS.jpg'},{type:'video',src:'hero-video.mp4',thumb:'IMAGENS/DORICHIPS.jpg'}] },
+            { id:20, name:"MANDI ZENU", cat:"especialidades", desc:"Papas • Carnes frías Zenu • 4 Huevitos", price:16000, image:"IMAGENS/Mandi zenu.jpg", gallery:[{type:'image',src:'IMAGENS/Mandi zenu.jpg'},{type:'video',src:'hero-video.mp4',thumb:'IMAGENS/Mandi zenu.jpg'}] },
+            { id:21, name:"BURGUER", cat:"especialidades", desc:"Pan • Carne desmechada • Pollo desmechado • Ripio de papa • Tocineta • Queso", price:20000, image:"IMAGENS/MANDI MIXTA.jpg", gallery:[{type:'image',src:'IMAGENS/MANDI MIXTA.jpg'},{type:'video',src:'hero-video.mp4',thumb:'IMAGENS/MANDI MIXTA.jpg'}] },
             { id:22, name:"BURGUER CHIPS", cat:"especialidades", desc:"Pan • Carne desmechada • Pollo desmechado • Ripio de papa • Tocineta • Queso • Papas", price:25000, image:"IMAGENS/SUPER CHIPS.jpg" },
             { id:23, name:"MANDI DESGRANADO", cat:"especialidades", desc:"Papas • Tocineta • Queso • Maicitos • 1 Huevito", price:16000, image:"IMAGENS/MANDI.jpg" },
             { id:24, name:"SALCHIESPECIAL", cat:"especialidades", desc:"Papas • Salchichas • Arepa • 1 Coctelero • 1 Huevito", price:10000, image:"IMAGENS/Salchiespecial_.jpg" },
@@ -898,17 +942,57 @@
         }
 
         // ========== ZOOM ==========
-        const zOv=document.getElementById('zoom-ov'),zImg=document.getElementById('zoom-img'),zN=document.getElementById('zoom-name'),zP=document.getElementById('zoom-price');
+        const zOv=document.getElementById('zoom-ov'),zImg=document.getElementById('zoom-img'),zVid=document.getElementById('zoom-vid');
+        const zN=document.getElementById('zoom-name'),zP=document.getElementById('zoom-price');
         const zBadge=document.getElementById('zoom-badge-btn'),zDesc=document.getElementById('zoom-desc');
+        const zGalWrap=document.getElementById('zoom-gallery-wrap'),zGal=document.getElementById('zoom-gallery');
         let currentZoomProduct = null;
+
+        function renderGalleryThumb(item, index) {
+            const div = document.createElement('div');
+            div.className = index === 0 ? 'gallery-thumb active' : 'gallery-thumb';
+            div.innerHTML = `<img src="${item.thumb || item.src}" alt="Thumb">` + 
+                            (item.type === 'video' ? `<div class="play-icon"><i class="fas fa-play"></i></div>` : '');
+            div.addEventListener('click', () => {
+                document.querySelectorAll('.gallery-thumb').forEach(t=>t.classList.remove('active'));
+                div.classList.add('active');
+                if(item.type === 'video') {
+                    zImg.style.display = 'none';
+                    zVid.src = item.src;
+                    zVid.style.display = 'block';
+                    zVid.play();
+                } else {
+                    zVid.style.display = 'none';
+                    zVid.pause();
+                    zImg.src = item.src;
+                    zImg.style.display = 'block';
+                }
+            });
+            return div;
+        }
+
         function openZoom(p){
             currentZoomProduct = p;
-            zImg.src=p.image;zImg.alt=p.name;zN.textContent=p.name;zP.textContent=fmtPrice(p.price);
+            zVid.style.display='none'; zVid.pause();
+            zImg.src=p.image; zImg.alt=p.name; zImg.style.display='block';
+            zN.textContent=p.name; zP.textContent=fmtPrice(p.price);
             zDesc.style.display='none'; zDesc.textContent='';
             zBadge.textContent='🍽 Qué lleva';
-            zOv.classList.add('active');document.body.style.overflow='hidden';
+            
+            if(p.gallery && p.gallery.length > 0) {
+                zGalWrap.style.display = 'block';
+                zGal.innerHTML = '';
+                p.gallery.forEach((item, i) => zGal.appendChild(renderGalleryThumb(item, i)));
+            } else {
+                zGalWrap.style.display = 'none';
+            }
+
+            zOv.classList.add('active'); document.body.style.overflow='hidden';
         }
-        function closeZoom(){zOv.classList.remove('active');document.body.style.overflow='';currentZoomProduct=null;}
+        function closeZoom(){
+            zOv.classList.remove('active'); document.body.style.overflow='';
+            zVid.pause(); currentZoomProduct=null;
+        }
         zBadge.addEventListener('click', () => {
             if(zDesc.style.display==='none' && currentZoomProduct){
                 zDesc.textContent=currentZoomProduct.desc;
