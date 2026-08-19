@@ -10,35 +10,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0e0e0e;
+            --bg: #0a0a0a;
             --white: #ffffff;
-            --text: #e0e0e0;
-            --text-mid: #b0b0b0;
+            --text: #ffffff; /* Increased brightness */
+            --text-mid: #cccccc; /* Increased brightness */
             --red: #E02020;
-            --gold: #D4A017;
+            --gold: #FFD700; /* Brighter gold */
             --font-display: 'Playfair Display', Georgia, serif;
             --font-body: 'Montserrat', -apple-system, sans-serif;
         }
         body {
             background: var(--bg); color: var(--text);
             font-family: var(--font-body);
-            line-height: 1.6;
+            line-height: 1.7;
             margin: 0; padding: 0;
             -webkit-font-smoothing: antialiased;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 20px 80px;
         }
         .header {
             text-align: center;
             margin-bottom: 50px;
+            margin-top: 20px;
         }
         .header img {
-            width: 80px; height: 80px;
+            width: 90px; height: 90px;
             margin-bottom: 20px;
             border-radius: 50%;
+            border: 2px solid var(--gold);
         }
         .header h1 {
             font-family: var(--font-display);
@@ -48,53 +50,57 @@
         }
         .header p {
             color: var(--red);
-            font-style: italic;
-            font-family: var(--font-display);
+            font-weight: 700;
             font-size: 1.2rem;
-            margin-top: 5px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
         .section {
-            background: #151515;
-            border: 1px solid rgba(255,255,255,0.07);
+            background: #111111;
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 14px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 35px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
         .section h2 {
             font-family: var(--font-display);
             color: var(--gold);
             font-size: 1.8rem;
             margin-top: 0;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(212,160,23,0.3);
-            padding-bottom: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(255,215,0,0.3);
+            padding-bottom: 12px;
         }
         h3 {
             color: var(--white);
-            font-size: 1.1rem;
-            margin-top: 25px;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
         }
         p, li {
             color: var(--text-mid);
-            font-size: 0.95rem;
+            font-size: 1.05rem; /* Larger font size */
             margin-bottom: 15px;
         }
         ul {
             padding-left: 20px;
         }
         li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .back-btn {
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--red);
             color: var(--white); text-decoration: none;
-            font-weight: 600; text-transform: uppercase;
+            font-weight: 700; text-transform: uppercase;
             letter-spacing: 0.1em; font-size: 0.85rem;
-            transition: color 0.3s;
+            padding: 12px 24px; border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(224,32,32,0.4);
         }
-        .back-btn:hover { color: var(--red); }
+        .back-btn:hover { background: #B01515; transform: translateY(-2px); }
     </style>
 </head>
 <body>
