@@ -330,13 +330,15 @@
         @media (min-width: 540px) { .promo-grid { grid-template-columns: repeat(2,1fr); } }
         @media (min-width: 768px) { .promo-grid { padding: 0 36px; gap: 26px; } }
         .promo-box {
-            position: relative; border-radius: var(--radius); overflow: hidden;
-            border: 1px solid var(--border); aspect-ratio: 16/9;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            cursor: pointer; transition: transform 0.4s;
+            background: #111;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.5s;
         }
         .promo-box:hover { transform: translateY(-5px); box-shadow: 0 15px 40px var(--red-glow); border-color: rgba(224,32,32,0.3); }
-        .promo-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .promo-box img { width: 100%; height: auto; display: block; object-fit: cover; transition: transform 0.5s; }
         .promo-box:hover img { transform: scale(1.05); }
         .promo-overlay {
             position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 60%);
@@ -779,14 +781,43 @@
         <button class="recommend-close" id="dinamicas-close"><i class="fas fa-times"></i></button>
         <h3 style="color: var(--gold); font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 20px; margin-top: 5px; text-align: center; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px;">Dinámicas y Actividades</h3>
         
-        <h4 style="color: var(--white); font-size: 1.2rem; margin-top: 20px; font-family: var(--font-display);">Promoción 20% de Descuento</h4>
-        <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 15px;">Válida por 1 mes desde publicación. Requiere escanear QR, llenar formulario y mostrar que sigues a Mandi Chips en redes sociales. Aplica para domicilios (Sede Envigado/Cocina Oculta). Máximo un uso por persona, no acumulable.</p>
+        <h4 style="color: var(--white); font-size: 1.3rem; margin-top: 20px; font-family: var(--font-display);">Términos y Condiciones Actualizados - Promoción 20% de Descuento Mandi & Chips</h4>
+        <ol style="color: #ccc; font-size: 0.95rem; padding-left: 20px; margin-bottom: 20px; line-height: 1.5;">
+            <li style="margin-bottom: 10px;"><strong>Vigencia de la Promoción:</strong> La campaña tendrá una duración de un (1) mes calendario, contado a partir de la fecha de publicación del material publicitario oficial. Vencido este plazo, la promoción perderá validez y no se admitirán registros ni redenciones adicionales.</li>
+            <li style="margin-bottom: 10px;"><strong>Mecánica de Participación (Paso a Paso):</strong> Para acceder y hacer efectivo el 20% de descuento en su pedido a domicilio, el cliente deberá seguir estrictamente el siguiente proceso:
+                <ul>
+                    <li><strong>Escaneo y Registro:</strong> El usuario deberá escanear el código QR disponible en la pauta publicitaria, completar el formulario de inscripción digital y adjuntar en el mismo formulario el pantallazo que compruebe que sigue a Mandi & Chips en sus redes sociales oficiales.</li>
+                    <li><strong>Validación del pedido:</strong> Al momento de solicitar el domicilio a través de punto de venta Envigado o Cocina oculta, el cliente deberá presentar y verificar sus datos de que ya completó e ingresó correctamente la información en el formulario (como en el caso de validación previa de registros).</li>
+                </ul>
+            </li>
+            <li style="margin-bottom: 10px;"><strong>Cobertura y Canales Válidos:</strong> El descuento aplica exclusivamente para pedidos a domicilio gestionados a través de punto de venta Envigado y Cocina oculta. No es válido para consumos presenciales ni para canales de venta distintos a los autorizados.</li>
+            <li style="margin-bottom: 10px;"><strong>Restricciones y Limitaciones:</strong>
+                <ul>
+                    <li><strong>Límite por persona:</strong> La promoción es válida por una (1) sola vez por persona (validada mediante los datos del formulario y del domicilio). Cada inscripción otorga el beneficio en una única oportunidad. Si se desea otro descuento, deberá realizarse bajo otro pedido independiente o por medio de otra persona.</li>
+                    <li><strong>No acumulabilidad:</strong> Este beneficio no es acumulable con otras promociones, ofertas, combos o descuentos vigentes de la marca.</li>
+                    <li><strong>Base de aplicación:</strong> El 20% de descuento se aplicará sobre el valor total de la venta del domicilio (sin incluir la tarifa de envío, salvo indicación contraria).</li>
+                </ul>
+            </li>
+            <li style="margin-bottom: 10px;"><strong>Aceptación y Validación:</strong> El cumplimiento de cada uno de los pasos anteriores es obligatorio. Si el usuario no completa el registro en el formulario, no adjunta el comprobante del seguimiento en redes sociales o no presenta la verificación de su inscripción al ordenar, Mandi & Chips no podrá hacer efectivo el descuento.</li>
+        </ol>
 
-        <h4 style="color: var(--white); font-size: 1.2rem; margin-top: 20px; font-family: var(--font-display);">Campaña "Mandi Martes"</h4>
-        <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 15px;">Todos los martes (12pm a 12am). Compra 2 unidades participantes y recibe 50% de descuento en la de menor valor. Solo presencial. Máx 3 descuentos por persona/día. No acumulable.</p>
+        <h4 style="color: var(--white); font-size: 1.3rem; margin-top: 30px; font-family: var(--font-display); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">TÉRMINOS Y CONDICIONES - CAMPAÑA "MANDI MARTES"</h4>
+        <ol style="color: #ccc; font-size: 0.95rem; padding-left: 20px; margin-bottom: 20px; line-height: 1.5;">
+            <li style="margin-bottom: 10px;"><strong>Vigencia de la Promoción:</strong> La campaña "Mandy Martes" estará vigente exclusivamente los días martes de cada mes, comprendidos dentro del horario de 12:00 m. (mediodía) hasta las 12:00 a.m. (medianoche), o hasta agotar existencias, en los horarios habituales de atención de cada sede.</li>
+            <li style="margin-bottom: 10px;"><strong>Cobertura:</strong> La promoción aplica en todas las sedes físicas autorizadas de Mandy Chips (No aplica para canales digitales o domicilios propios).</li>
+            <li style="margin-bottom: 10px;"><strong>Mecánica de la Promoción:</strong> Por la compra de dos (2) unidades de productos participantes, el cliente recibirá un cincuenta por ciento (50%) de descuento sobre la segunda unidad de menor valor dentro de la misma factura o tirilla de compra. El descuento recae de forma automática sobre el producto de menor valor económico de la combinación. <em>Ejemplo: Si el cliente adquiere un producto de $10.000 y otro de $6.000, el descuento del 50% se aplicará sobre el producto de $6.000 (el valor del descuento será de $3.000).</em></li>
+            <li style="margin-bottom: 10px;"><strong>Restricciones y Condiciones Generales:</strong> La promoción es aplicable únicamente los martes dentro del horario establecido. Compras realizadas fuera de este rango de horario no participarán del beneficio. El descuento no es acumulable con otras promociones, bonos, códigos de descuento o combos vigentes, a menos que la marca lo autorice expresamente. No es redimible, en todo o en parte, por dinero en efectivo. Aplica un máximo de 3 descuentos por factura y por cliente durante la vigencia diaria de la promoción. Las imágenes de los productos son de referencia; la promoción aplica sobre las referencias de bastones de papa / papas fritas disponibles en el punto de venta al momento de la compra.</li>
+            <li style="margin-bottom: 10px;"><strong>Protección al Consumidor y Tratamiento de Datos:</strong> Cualquier petición, queja o reclamo (PQR) relacionados con esta promoción podrán ser canalizados a través de los canales oficiales de atención al cliente de Mandy Chips. Esta actividad cumple con las disposiciones de la Ley 1480 de 2011 (Estatuto del Consumidor) de la República de Colombia.</li>
+        </ol>
 
-        <h4 style="color: var(--white); font-size: 1.2rem; margin-top: 20px; font-family: var(--font-display);">Actividad "El Mandi Botón"</h4>
-        <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 15px;">Presiona el botón luego de pagar. Si el reloj frena exacto en 10.000, te devolvemos el valor de la factura (Tope $50.000 COP). Válido solo en punto de venta, sujeto a disponibilidad del botón y cámaras de seguridad.</p>
+        <h4 style="color: var(--white); font-size: 1.3rem; margin-top: 30px; font-family: var(--font-display); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">TÉRMINOS Y CONDICIONES - ACTIVIDAD "EL MANDI BOTÓN"</h4>
+        <ol style="color: #ccc; font-size: 0.95rem; padding-left: 20px; margin-bottom: 20px; line-height: 1.5;">
+            <li style="margin-bottom: 10px;"><strong>Participación:</strong> Podrán participar los clientes que realicen una compra de productos en el punto de venta de Mandi Chips durante el horario de la actividad. La participación está condicionada a haber realizado y pagado la totalidad de la compra antes de presionar el MandI Botón.</li>
+            <li style="margin-bottom: 10px;"><strong>Mecánica:</strong> El cliente tendrá una (1) sola oportunidad de presionar el botón después de haber completado su pago en caja. El objetivo es detener el tablero digital en el número exacto 10.000. Si el tablero se detiene exactamente en el número 10.000, el cliente será acreedor al beneficio de la devolución del valor total de su factura.</li>
+            <li style="margin-bottom: 10px;"><strong>Condiciones del Premio:</strong> El beneficio aplica únicamente sobre el valor total de la factura pagada en el momento. Tope máximo: El valor máximo a reintegrar por factura ganadora es de $50.000 COP. Si la factura supera este valor, el excedente deberá ser asumido por el cliente o se reintegrará solo hasta el tope máximo. El premio es personal e intransferible. No es canjeable por dinero en efectivo, solo se realiza mediante el reintegro de lo pagado en la misma transacción.</li>
+            <li style="margin-bottom: 10px;"><strong>Reglas de Transparencia y Control:</strong> La actividad es válida solo si el tablero se detiene de forma clara en el número 10.000. Cualquier detención dudosa, error del dispositivo o interrupción será revisada por el administrador del punto, cuya decisión será inapelable. Cualquier intento de manipulación del dispositivo o fraude por parte del cliente resultará en la descalificación inmediata. La promoción está sujeta a la disponibilidad del dispositivo Mandibotón. En caso de falla técnica del equipo, la actividad se suspenderá temporalmente sin lugar a compensaciones.</li>
+            <li style="margin-bottom: 10px;"><strong>Vigencia y Discrecionalidad:</strong> Mandi Chips se reserva el derecho de definir los días y horarios específicos para la activación del Mandibotón, los cuales serán comunicados en cada sede.</li>
+        </ol>
     </div>
 
     <!-- RECOMMEND POPUP -->
@@ -852,7 +883,7 @@
             { id:17, name:"MANDI", cat:"mandis", desc:"Papas • Salchichas • 1 Coctelero • 1 Huevito", price:8000, image:"IMAGENS/MANDI_NUEVA.webp" },
             { id:18, name:"DORI CHIPS GRANDE", cat:"especialidades", desc:"Papa • Carne desmechada • Pollo desmechado • Doritos • Tocineta • Queso • Maicitos", price:30000, image:"IMAGENS/DORICHIPS GRANDE.webp", gallery:[{type:'image',src:'IMAGENS/DORICHIPS GRANDE.webp'},{type:'video',src:'hero-video.mp4',thumb:'IMAGENS/DORICHIPS GRANDE.webp'}] },
             { id:19, name:"DORI CHIPS PEQUEÑA", cat:"especialidades", desc:"Papa • Carne desmechada • Pollo desmechado • Doritos • Tocineta • Queso • Maicitos", price:25000, image:"IMAGENS/DORICHIPS.webp", gallery:[{type:'image',src:'IMAGENS/DORICHIPS.webp'},{type:'video',src:'hero-video.mp4',thumb:'IMAGENS/DORICHIPS.webp'}] },
-            { id:20, name:"MANDI ZENU", cat:"especialidades", desc:"Papas • Carnes frías Zenu • 4 Huevitos", price:16000, image:"IMAGENS/MANDI ZENU.webp", gallery:[{type:'image',src:'IMAGENS/MANDI ZENU.webp'},{type:'video',src:'hero-video.mp4',thumb:'IMAGENS/MANDI ZENU.webp'}] },
+            { id:20, name:"MANDI ZENU", cat:"especialidades", desc:"Papas • Carnes frías Zenu • 4 Huevitos", price:16000, image:"IMAGENS/Mandi zenu.webp", gallery:[{type:'image',src:'IMAGENS/Mandi zenu.webp'},{type:'video',src:'hero-video.mp4',thumb:'IMAGENS/Mandi zenu.webp'}] },
             { id:21, name:"BURGUER", cat:"especialidades", desc:"Pan • Carne desmechada • Pollo desmechado • Ripio de papa • Tocineta • Queso", price:20000, image:"IMAGENS/BURGUER.webp", gallery:[{type:'image',src:'IMAGENS/BURGUER.webp'},{type:'video',src:'hero-video.mp4',thumb:'IMAGENS/BURGUER.webp'}] },
             { id:22, name:"BURGUER CHIPS", cat:"especialidades", desc:"Pan • Carne desmechada • Pollo desmechado • Ripio de papa • Tocineta • Queso • Papas", price:25000, image:"IMAGENS/BURGUER CHIPS.webp" },
             { id:23, name:"MANDI DESGRANADO", cat:"especialidades", desc:"Papas • Tocineta • Queso • Maicitos • 1 Huevito", price:16000, image:"IMAGENS/MANDI DESGRANADO.webp" },
