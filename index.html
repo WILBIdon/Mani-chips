@@ -1426,7 +1426,7 @@
             dinPopup.style.transform = 'translate(-50%, -50%) scale(0.9)';
         }
 
-        function toggleDetalle(btn) {
+        window.toggleDetalle = function(btn) {
             const detalle = btn.nextElementSibling;
             if (detalle.style.display === 'none') {
                 detalle.style.display = 'block';
@@ -1439,7 +1439,7 @@
                 btn.style.background = 'transparent';
                 btn.style.color = 'var(--gold)';
             }
-        }
+        };
         
         const heroDinBtn = document.getElementById('hero-dinamicas');
         const mobDinBtn = document.getElementById('mob-dinamicas');
